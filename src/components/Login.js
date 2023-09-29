@@ -2,19 +2,38 @@
 
 import React, { useState } from "react";
 import { auth } from "./firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import {
+    MDBContainer,
+    MDBCol,
+    MDBRow,
+    MDBBtn,
+    MDBIcon,
+    MDBInput,
+    MDBCheckbox
+  }
+  from 'mdb-react-ui-kit';
+
+  import "./login.css";
+  import { useNavigate } from 'react-router-dom';
+  
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
 
   const signIn = (e) => {
     e.preventDefault();
-    
-    auth.signInWithEmailAndPassword(email, password)
+
+    signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Successfully logged in
+        // Successfully logged in   
         const user = userCredential.user;
         console.log("Logged in user:", user);
+        navigate('/welcome');
       })
       .catch((error) => {
         // Handle login errors
@@ -22,27 +41,43 @@ const Login = () => {
       });
   };
 
+  const goToSignUp = (e) => {
+    navigate('/register');
+  }
+
   return (
-    <div>
-      <h2>Login</h2>
-      <form>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit" onClick={signIn}>
-          Sign In
-        </button>
-      </form>
-    </div>
+    <MDBContainer fluid className="p-3 my-5">
+
+      <MDBRow>
+
+        <MDBCol col='10' md='6'>
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid" alt="Phone image" />
+        </MDBCol>
+
+        <MDBCol col='4' md='6'>
+
+
+          <MDBInput wrapperClass='mb-4' placeholder='Email address' id='formControlLg' type='email' size="lg" onChange={(e) => setEmail(e.target.value)}/>
+          <MDBInput wrapperClass='mb-4' placeholder='Password' id='formControlLg' type='password' size="lg" onChange={(e) => setPassword(e.target.value)}/>
+
+
+
+
+          <button className="bar"  onClick={signIn}>Sign in</button>
+
+          <div className="divider d-flex align-items-center my-4">
+            <p className="text-center fw-bold mx-3 mb-0">OR</p>
+          </div>
+
+          <button className="bar"  onClick={goToSignUp}>Sign up</button>
+
+          
+
+        </MDBCol>
+
+      </MDBRow>
+
+    </MDBContainer>
   );
 };
 

@@ -1,18 +1,30 @@
-// firebase.js
+// Old import style
+// import firebase from 'firebase/app';
+// import 'firebase/auth';
 
-import firebase from "firebase/app";
-import "firebase/auth";
+// New modular import style
+import { initializeApp } from 'firebase/app';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
+// Initialize Firebase
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-};
+    apiKey: "AIzaSyBHO92ddlDvBpccCBW1EenB1YcKfxL-wek",
+    authDomain: "here-hackathon-4c323.firebaseapp.com",
+    projectId: "here-hackathon-4c323",
+    storageBucket: "here-hackathon-4c323.appspot.com",
+    messagingSenderId: "153095438355",
+    appId: "1:153095438355:web:7bb4c6b96e08aab6e4bfe6"
+    
+  };
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+const app = initializeApp(firebaseConfig);
 
-export { auth };
+// Use Firebase Authentication
+const auth = getAuth(app);
+
+
+export {auth};
+
+
+
+

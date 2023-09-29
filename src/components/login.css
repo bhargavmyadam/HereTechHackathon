@@ -1,0 +1,16 @@
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+
+.bar{
+    background-color: rgb(105, 110, 218);
+  color: rgb(15, 15, 16);
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 18px;
+  width: 740px
+}
