@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import RestaurantList from "./restaurantList";
+import axios from 'axios';
 
-const restaurantList = [
+const initialRestaurantList = [
     {
       name: "The Fish Market",
       location: { lat: 64.1508, lng: -21.9536 },
@@ -21,7 +22,33 @@ const restaurantList = [
   ];
 
 const Query = (props) => {
+    const [restaurantList, setRestaurantList] = useState(initialRestaurantList);
     const [searchTerm, setSearchTerm] = useState('');
+    const apiUrl = `https://discover.search.hereapi.com/v1/discover?at=${props.userPosition.lat},${props.userPosition.lng}&limit=6&lang=en&q=${searchTerm}&apiKey=${props.apikey}`
+    console.log(apiUrl);
+    const handleSearch = (e) => {
+    
+      axios.get(apiUrl)
+        .then(response => {
+          // Handle successful response
+          console.log(response);
+          const list = response.data.items.map((item)=>{
+            return {
+               name: item.title,
+               location: item.position
+
+               
+            };
+          })
+          setRestaurantList(list);
+        })
+
+        .catch(error => {
+          // Handle error
+          console.error('Error:', error);
+        });
+      
+    }
 
     return (
     <div>
@@ -32,8 +59,8 @@ const Query = (props) => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button>Search</button>
-        <RestaurantList list={restaurantList} onClickHandler={props.entryClickHandler} />
+        <button onClick={handleSearch}>Search</button>
+        <RestaurantList list={restaurantList} entryClickHandler={props.entryClickHandler} />
     </div>
     );
 }

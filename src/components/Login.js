@@ -1,6 +1,6 @@
 // Login.js
 
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { auth } from "./firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
@@ -22,6 +22,7 @@ import {
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  //const [userPosition, setUserPosition] = useState(null);
   const navigate = useNavigate();
 
 
@@ -33,6 +34,20 @@ const Login = () => {
         // Successfully logged in   
         const user = userCredential.user;
         console.log("Logged in user:", user);
+        // navigator.geolocation.getCurrentPosition(
+        //   function (position) {
+        //     console.log("Latitude is :", position.coords.latitude);
+        //     console.log("Longitude is :", position.coords.longitude);
+        //     const temp = {
+        //       lat : position.coords.latitude , 
+        //       lng : position.coords.longitude
+        //     };
+        //     setUserPosition(temp);
+        //   },
+        //   function (error) {
+        //     console.error("Error getting user's position:", error);
+        //   }
+        // );
         navigate('/welcome');
       })
       .catch((error) => {
@@ -44,6 +59,8 @@ const Login = () => {
   const goToSignUp = (e) => {
     navigate('/register');
   }
+
+
 
   return (
     <MDBContainer fluid className="p-3 my-5">
